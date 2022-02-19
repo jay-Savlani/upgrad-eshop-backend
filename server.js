@@ -20,6 +20,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 // requiring routes
 require("./routes/user.routes")(app);
 require("./routes/address.routes")(app);
+require("./routes/product.routes")(app);
 
 // checking request
 
