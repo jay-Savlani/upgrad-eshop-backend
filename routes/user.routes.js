@@ -7,7 +7,7 @@ module.exports = (app) => {
 
     router.post("/users" , userController.signup);
 
-    router.post("/auth", /* controller method */ );
+    router.post("/auth", userController.auth );
 
 
 

@@ -4,6 +4,9 @@ const User = db.user;
 // requiring bcrypt algorithm to store hashed password in database
 const bcrypt = require("bcrypt");
 
+// requiring jsonwebtoken to generate an access token
+const jwt = require("jsonwebtoken");
+
 // importing util functions 
 
 const utils = require("../utils/utils");
@@ -53,7 +56,7 @@ exports.signup = (req,res) => {
 
             const hashedPass = bcrypt.hashSync(password, 10);
 
-            const newUser = new User({...req.body, password: hashedPass});
+            const newUser = new User({...req.body, password: hashedPass, userName: `${firstName} ${lastName}`});
             newUser.save()
             .then(user => {
                 res.status(200).json({
@@ -76,4 +79,52 @@ exports.signup = (req,res) => {
         })
     })
 
+}
+
+exports.auth = (req,res) => {
+    const {email, password} = req.body;
+
+    // checking if email exists in the databse
+
+    User.findOne({email: email})
+    .then(user => {
+        if(user === null) {
+            res.status(401).json({
+                message: "This email has not been registered!"
+            });
+            return;
+        }
+
+        // check for password
+
+        if(bcrypt.compareSync(password, user.password)) {
+            // password matches 
+
+            // generating an access token using jsonwebtoken
+
+            const token = jwt.sign({username: user.userName}, "hash77", {expiresIn: "10h"})
+
+            // sending token to response header
+
+            res.setHeader("x-auth-token", token);
+
+            res.status(200).json({
+                email: email,
+                name: user.userName,
+                isAuthenticated: true
+            });
+        }
+        // else password is invalid
+        else {
+            res.status(401).json({
+                message: "Invalid Credentials!"
+            });
+        }
+    })
+    .catch(err => {
+        console.log("server error in finding user:  ", err);
+        res.status(500).send({
+            message: "Internal Server Error"
+        })
+    })
 }
