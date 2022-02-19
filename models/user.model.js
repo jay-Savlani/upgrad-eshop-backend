@@ -38,7 +38,7 @@ module.exports = (mongoose) => {
             type: Date,
             
         }
-    }, {timeStamps: true});
+    }, {timestamps: true});
 
     userSchema.pre('save', function(next){
        
