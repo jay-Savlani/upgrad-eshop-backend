@@ -5,7 +5,7 @@ module.exports = (app) => {
 
     app.use("", router);
 
-    router.get("/users" , /* controller method */ );
+    router.post("/users" , userController.signup);
 
     router.post("/auth", /* controller method */ );
 

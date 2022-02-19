@@ -25,6 +25,21 @@ app.get("/", (req,res) => {
     res.send('Welcome to upGrad Eshop');
 });
 
+// connecting to database
+const db = require("./models");
+
+db.mongoose
+.connect(db.url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+.then(() => {
+    console.log("Connection to database successfull.");
+})
+.catch(() => {
+    console.log("Failed to connect to database");
+})
+
 app.listen(process.env.PORT, () => console.log(`Server is listening on PORT ${process.env.PORT}`) );
 
 

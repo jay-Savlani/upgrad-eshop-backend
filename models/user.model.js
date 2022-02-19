@@ -28,17 +28,21 @@ module.exports = (mongoose) => {
         },
         createdAt: {
             type: Date,
-            required: true
+            
         },
         updatedAt: {
             type: Date,
-            required: true
+            
         }
     }, {timeStamps: true});
 
-    userSchema.pre('save', (next) => {
+    userSchema.pre('save', function(next){
+       
+    
         if(!this.createdAt && !this.updatedAt) {
+           
             this.createdAt = new Date();
+            
             this.updatedAt = new Date();
         } 
 
@@ -47,7 +51,7 @@ module.exports = (mongoose) => {
         }
         next();
     });
-    const User = new mongoose.model(userSchema);
+    const User = mongoose.model("user", userSchema);
 
     return User;
     
