@@ -17,7 +17,9 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+// requiring routes
 require("./routes/user.routes")(app);
+require("./routes/address.routes")(app);
 
 // checking request
 

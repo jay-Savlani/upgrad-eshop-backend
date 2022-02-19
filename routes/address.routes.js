@@ -11,6 +11,6 @@ module.exports = (app) => {
 
     // using auth middleware in adding address
 
-    router.post("/addresses" ,  auth , /* contoller method */);
+    router.post("/addresses", auth  , addressController.addAddress);
 
 }

@@ -1,4 +1,8 @@
+const User = require("./user.model");
+
 module.exports = (mongoose) => {
+
+
     const addressSchema = mongoose.Schema({
         name: {
             type: String,
@@ -35,6 +39,10 @@ module.exports = (mongoose) => {
         updatedAt: {
             type: Date,
             
+        },
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "user"
         }
 
     }, {timestamps: true});
@@ -54,7 +62,7 @@ module.exports = (mongoose) => {
         }
         next();
     });
-    const Address = mongoose.model("user", userSchema);
+    const Address = mongoose.model("address", addressSchema);
 
     return Address;
 }
