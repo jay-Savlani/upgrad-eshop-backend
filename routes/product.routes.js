@@ -5,13 +5,17 @@ module.exports = (app) => {
 
     app.use("", router);
 
-    router.get("/products" , /* contoller method */);
+    // searching for products
+
+    router.get("/products" , productController.searchProduct);
 
     router.get("/products/categories",  /* contoller method */);
 
     router.get("/products/:id",  /* contoller method */);
 
-    router.post("/products" , /* contoller method */);
+    // add a product
+
+    router.post("/products" , productController.addProduct);
 
     router.put("/products/:id",  /* contoller method */);
     

@@ -10,7 +10,7 @@ module.exports = (mongoose) => {
             required: true
         },
         price: {
-            type: Number.toFixed(1),
+            type: Number,
             required: true
         },
         description: {
@@ -27,7 +27,7 @@ module.exports = (mongoose) => {
         },
         imageUrl: {
             type: String,
-            required: true
+            required: false
         },
         
         createdAt: {
@@ -37,6 +37,11 @@ module.exports = (mongoose) => {
         updatedAt: {
             type: Date,
             
+        },
+        product_id: {
+            type: Number,
+            required: true,
+            unique: true
         }
     }, {timestamps: true});
 

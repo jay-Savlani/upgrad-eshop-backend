@@ -13,6 +13,41 @@ const validateEmail = (email) => {
             && part1AndPart2Regex.test(part1) && part1AndPart2Regex.test(part2) && part3Regex.test(part3);
 }
 
+const buildProductSortCriteria = (direction, sortBy) => {
+
+    const mapSort = {
+        asc: 1,
+        desc: -1,
+    };
+
+    let sortCriteria = {};
+    
+    if(!direction && !sortBy) {
+        sortCriteria = {product_id: mapSort["desc"]};
+    }
+    else if(direction && !sortBy){
+        sortCriteria = {product_id: mapSort[direction]};
+    }
+    else if(!direction && sortBy) {
+
+        sortCriteria = {[sortBy]: mapSort["desc"]};
+    }
+    else{
+
+        sortCriteria = {[sortBy]: mapSort[direction]};
+    }
+    return sortCriteria;
+}
+
+const buildFindProductFilter = (name, category) => {
+    let filter = {};
+
+    if(name) filter.name = name;
+    if(category) filter.category = category;
+
+    return filter;
+}
+
 module.exports = {
-    validateEmail
+    validateEmail, buildProductSortCriteria, buildFindProductFilter
 }
