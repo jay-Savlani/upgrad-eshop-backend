@@ -25,6 +25,6 @@ module.exports = (app) => {
 
     router.put("/products/:id",  productController.updateProductByid);
     
-    router.delete("/products/:id",  /* contoller method */);
+    router.delete("/products/:id",  productController.deleteProductById);
 
 }

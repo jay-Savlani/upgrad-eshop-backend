@@ -220,9 +220,40 @@ exports.updateProductByid = (req,res) => {
     .catch(err => {
         console.log("server error in updating a product: ", err);
         res.status(500).json({
-            message: "Internal server error"
+            message: "Internal server error"    
         });
     })
 
     
+}
+
+// controller method to delete a product
+
+exports.deleteProductById = (req,res) => {
+    const {id} = req.params;
+
+    // delete product
+
+    Product.findOneAndDelete({product_id: id})
+    .then(product => {
+        // checking if product is null or not
+        if(product !== null) {
+            res.status(200).json({
+                message: `Product with ID - ${id} deleted successfully!`
+            });
+        }
+        // else product is not found for give id
+        else {
+            res.status(404).json({
+                message: `No Product found for ID - ${id}!`
+            })
+        }
+    })
+    .catch(err => {
+        console.log("server error in deleting a product: ", err);
+        res.status(500).json({
+            message: "Internal server error"    
+        });
+    })
+
 }
