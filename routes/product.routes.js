@@ -8,16 +8,22 @@ module.exports = (app) => {
     // searching for products
 
     router.get("/products" , productController.searchProduct);
+    
+    // get product categories
 
-    router.get("/products/categories",  /* contoller method */);
+    router.get("/products/categories",  productController.getProductCategories);
 
-    router.get("/products/:id",  /* contoller method */);
+    // get particular product by id
+
+    router.get("/products/:id",  productController.getProductById);
 
     // add a product
 
     router.post("/products" , productController.addProduct);
 
-    router.put("/products/:id",  /* contoller method */);
+    // update a product
+
+    router.put("/products/:id",  productController.updateProductByid);
     
     router.delete("/products/:id",  /* contoller method */);
 

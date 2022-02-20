@@ -114,3 +114,115 @@ exports.searchProduct = (req, res) => {
         })
 
 }
+
+
+// controller method to get product categories
+
+exports.getProductCategories = (req, res) => {
+    // using distinct method of mongoose
+
+    Product.distinct('category')
+    .then(categories => {
+        // checking if categories is not empty
+        if(categories.length !== 0 ) {
+            res.status(200).json({
+                categories: categories
+            })
+        }
+        // else return not found
+        else {
+            res.status(404).json({
+                message: "Categories not found"
+            });
+        }
+    })
+    .catch(err => {
+        console.log("Server error in performing distinct operation  ", err);
+        res.status(500).json({
+            message: "Internal server error"
+        })
+    })
+}
+
+// controller method to get product by id
+
+exports.getProductById = (req,res) => {
+    const {id} = req.params;
+
+    // search the databse for the id given
+
+    Product.findOne({product_id: id})
+    .then(product => {
+        // checking if product is null or not
+        if(product !== null) {
+            res.status(200).json({
+                product: product,
+                message: "Product fetched successfully"
+            })
+        }
+        // else no product found
+        else {
+            res.status(404).json({
+                message: "No product found!"
+            })
+        }
+    })
+    .catch(err => {
+        console.log("Server error in finding product by id: ", err);
+        res.status(500).json({
+            message: "Internal server error"
+        })
+    })
+}
+
+// controller method to update product by id
+
+exports.updateProductByid = (req,res) => {
+    const {id} = req.params;
+
+    const { name, category, price, description, manufacturer, availableItems, imageUrl } = req.body;
+
+    // creating an update object to take only the values that are necessary
+
+    const updateObject = {
+        name: name,
+        category: category,
+        price: price,
+        description: description,
+        manufacturer: manufacturer,
+        availableItems: availableItems,
+        imageUrl: imageUrl
+    }
+
+    if(id === undefined) {
+        res.status(404).json({
+            message: `No Product found`
+        });
+        return;
+    }
+
+    Product.findOneAndUpdate({product_id: id}, updateObject, {new: true})
+    .then(product => {
+        // checking if product is null or not
+        if(product !== null) {
+            res.status(200).json({
+                product: product,
+                message: "Product updated successfully"
+            });
+        }
+        // else product is not found for give id
+        else {
+            res.status(404).json({
+                message: `No Product found for ID - ${id}!`
+            })
+        }
+    })
+    .catch(err => {
+        console.log("server error in updating a product: ", err);
+        res.status(500).json({
+            message: "Internal server error"
+        });
+    })
+
+    
+}

@@ -60,6 +60,13 @@ module.exports = (mongoose) => {
         }
         next();
     });
+
+    productSchema.pre('updateOne', function(next) {
+        console.log("Entered pre update");
+        this.updatedAt = new Date();
+        next();
+    })
+
     const Product = mongoose.model("product", productSchema);
 
     return Product;
