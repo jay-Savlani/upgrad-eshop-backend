@@ -20,8 +20,20 @@ module.exports = (req,res,next) => {
 
                 User.findOne({userName: decoded.username})
                 .then(user => {
+
                     // if user is not null then continue exit middleware and give control to next method
-                    if(user !== null) next();
+                    if(user !== null) { 
+                        // role of user is not admin then terminate the request
+                        if(decoded.role.toLowerCase() !== "admin") {
+                            // end the request
+                            res.status(403).json({
+                                message: "You are not authorized to access this endpoint!"
+                            });
+                            return;
+                        }
+                        // else user is admin and continue
+                        next();
+                    }
                     // tempered token
                     else {
                         res.status(401).json({

@@ -102,7 +102,7 @@ exports.auth = (req,res) => {
 
             // generating an access token using jsonwebtoken
 
-            const token = jwt.sign({username: user.userName}, "hash77", {expiresIn: "10h"})
+            const token = jwt.sign({username: user.userName, role: user.role}, "hash77", {expiresIn: "10h"})
 
             // sending token to response header
 

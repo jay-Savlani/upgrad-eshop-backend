@@ -3,6 +3,10 @@ module.exports = (app) => {
 
     const productController = require("../controllers/product.controller");
 
+    // importing admin auth middleware
+
+    const adminAuth = require("../middlewares/admin.auth");
+
     app.use("", router);
 
     // searching for products
@@ -17,14 +21,16 @@ module.exports = (app) => {
 
     router.get("/products/:id",  productController.getProductById);
 
-    // add a product
+    // add a product, requires authentication and authorization
 
-    router.post("/products" , productController.addProduct);
+    router.post("/products" , adminAuth , productController.addProduct);
 
     // update a product
 
-    router.put("/products/:id",  productController.updateProductByid);
+    router.put("/products/:id", adminAuth , productController.updateProductByid);
+
+    // delete a product
     
-    router.delete("/products/:id",  productController.deleteProductById);
+    router.delete("/products/:id",  adminAuth , productController.deleteProductById);
 
 }
