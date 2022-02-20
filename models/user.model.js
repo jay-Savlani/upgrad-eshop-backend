@@ -1,5 +1,10 @@
 module.exports = (mongoose) => {
     const userSchema = mongoose.Schema({
+        user_id: {
+            type: Number,
+            required: true,
+            unique: true
+        },
         firstName: {
             type: String,
             required: true
@@ -36,7 +41,6 @@ module.exports = (mongoose) => {
         },
         updatedAt: {
             type: Date,
-            
         }
     }, {timestamps: true});
 

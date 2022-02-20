@@ -43,6 +43,11 @@ module.exports = (mongoose) => {
         user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "user"
+        },
+        address_id: {
+            type: Number,
+            required: true,
+            unique: true
         }
 
     }, {timestamps: true});

@@ -1,7 +1,7 @@
 const db = require("../models");
 const Address = db.address;
 
-exports.addAddress = (req, res) => {
+exports.addAddress = async (req, res) => {
     const { name, contactNumber, street, landmark, city, state, zipcode, user } = req.body;
 
     // validating zip code
@@ -30,7 +30,12 @@ exports.addAddress = (req, res) => {
 
     // adding address to the database
 
-    const newAddress = new Address(req.body);
+    // counting number of documents in address collection
+
+    const count = await Address.find({}).count();
+
+
+    const newAddress = new Address({...req.body, address_id: count + 1});
     newAddress.save()
     .then(address => {
         if(address !== null) {

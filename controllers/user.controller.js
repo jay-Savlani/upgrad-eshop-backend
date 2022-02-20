@@ -11,11 +11,15 @@ const jwt = require("jsonwebtoken");
 
 const utils = require("../utils/utils");
 
-exports.signup = (req,res) => {
+exports.signup = async (req,res) => {
         
     const {firstName, lastName, email, password, contactNumber} = req.body;
 
     // check if the email already exists in the database
+
+    // count the number of users 
+
+    const count = await User.find({}).count();
 
     User.findOne({email: email})
     .then(user => {
@@ -56,7 +60,9 @@ exports.signup = (req,res) => {
 
             const hashedPass = bcrypt.hashSync(password, 10);
 
-            const newUser = new User({...req.body, password: hashedPass, userName: `${firstName} ${lastName}`});
+            // saving new user
+
+            const newUser = new User({...req.body, password: hashedPass, userName: `${firstName} ${lastName}`, user_id: count + 1});
             newUser.save()
             .then(user => {
                 res.status(200).json({

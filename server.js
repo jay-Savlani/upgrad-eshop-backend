@@ -21,6 +21,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 require("./routes/user.routes")(app);
 require("./routes/address.routes")(app);
 require("./routes/product.routes")(app);
+require("./routes/order.routes")(app);
 
 // checking request
 
