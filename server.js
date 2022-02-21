@@ -4,7 +4,7 @@ const cors = require("cors");
 
 const bodyParser = require("body-parser");
 
-// using dotenv 
+// using dotenv to access env variables
 require("dotenv").config();
 
 // initializing express
@@ -12,6 +12,8 @@ require("dotenv").config();
 const app = express();
 
 // using middlewares
+// using cors to allow cross origin requests
+// using bodyParse to allow json and url encoded data in post requests
 
 app.use(cors());
 app.use(bodyParser.json());

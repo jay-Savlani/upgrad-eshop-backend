@@ -1,3 +1,11 @@
+/**
+ * 
+ * @param {String} email  
+ * @returns {Boolean} - returns boolean indicating whether email is valid or not
+ */
+
+
+
 const validateEmail = (email) => {
     let splitAt = email.split("@");
     let part1 = splitAt[0];
@@ -12,6 +20,13 @@ const validateEmail = (email) => {
     return part1.length >= 1 && part2.length >=1 && part3.length >= 2 && part3.length <= 6 
             && part1AndPart2Regex.test(part1) && part1AndPart2Regex.test(part2) && part3Regex.test(part3);
 }
+
+/**
+ * 
+ * @param {String} direction 
+ * @param {String} sortBy 
+ * @returns - sort criteria object for querying purposes
+ */
 
 const buildProductSortCriteria = (direction, sortBy) => {
 
