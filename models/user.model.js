@@ -30,6 +30,11 @@ module.exports = (mongoose) => {
             type: String,
             required: true
         },
+        address: {
+            type: [mongoose.Schema.Types.ObjectId],
+            ref: "address"
+        },
+
         role: {
             type: String,
             required: true,
@@ -37,24 +42,24 @@ module.exports = (mongoose) => {
         },
         createdAt: {
             type: Date,
-            
+
         },
         updatedAt: {
             type: Date,
         }
-    }, {timestamps: true});
+    }, { timestamps: true });
 
-    userSchema.pre('save', function(next){
-       
-    
-        if(!this.createdAt && !this.updatedAt) {
-           
+    userSchema.pre('save', function (next) {
+
+
+        if (!this.createdAt && !this.updatedAt) {
+
             this.createdAt = new Date();
-            
-            this.updatedAt = new Date();
-        } 
 
-        if(this.createdAt) {
+            this.updatedAt = new Date();
+        }
+
+        if (this.createdAt) {
             this.updatedAt = new Date();
         }
         next();
@@ -62,5 +67,5 @@ module.exports = (mongoose) => {
     const User = mongoose.model("user", userSchema);
 
     return User;
-    
+
 }

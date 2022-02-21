@@ -13,4 +13,8 @@ module.exports = (app) => {
 
     router.post("/addresses", auth  , addressController.addAddress);
 
+    // router method to get address based on user id
+
+    // router.get("/addresses/:id", addressController.fetchAddress);
+
 }

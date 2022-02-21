@@ -134,3 +134,41 @@ exports.auth = (req,res) => {
         })
     })
 }
+
+// fetch addresses based on user email 
+
+exports.getUserAddresses = (req, res) => {
+    const {email} = req.body;
+
+    // query user data based on email
+
+    User.findOne({email: email})
+    .then(user => {
+        // checking if user is null or not
+
+        if(user !== null) {
+            // populate user send address
+            user.populate('address')
+            .then(userPopulated => {
+                console.log('populated user is: ', userPopulated);
+                res.status(200).json({
+                    addresses: userPopulated.address,
+                    message: "Addresses fetched successfully"
+                });
+            })
+            
+        }
+        // else user is not found
+        else {
+            res.status(404).json({
+                message: "user not found"
+            });
+        }
+    })
+    .catch(err => {
+        console.log("server error in find user with email: ", err);
+        res.status(500).json({
+            message: "Internal server error"
+        })
+    })
+}
