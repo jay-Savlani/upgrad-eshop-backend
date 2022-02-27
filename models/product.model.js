@@ -45,6 +45,8 @@ module.exports = (mongoose) => {
         }
     }, {timestamps: true});
 
+   
+
     productSchema.pre('save', function(next){
        
     
@@ -67,7 +69,12 @@ module.exports = (mongoose) => {
         next();
     })
 
+    productSchema.index({name: "text"})
+
     const Product = mongoose.model("product", productSchema);
+    
+
+    
 
     return Product;
     

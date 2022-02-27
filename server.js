@@ -15,7 +15,7 @@ const app = express();
 // using cors to allow cross origin requests
 // using bodyParse to allow json and url encoded data in post requests
 
-app.use(cors());
+app.use(cors({exposedHeaders: "x-auth-token"}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 

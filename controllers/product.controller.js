@@ -36,7 +36,7 @@ exports.addProduct = async (req, res) => {
 
     const count = await Product.find({}).count();
 
-
+  
 
     const newProduct = new Product({ ...req.body, product_id: count + 1 });
 
@@ -66,6 +66,7 @@ exports.addProduct = async (req, res) => {
 
 
 exports.searchProduct = (req, res) => {
+    console.log("request recieved to search product");
     const { category, direction, name, sortBy } = req.query;
 
     // check if direction has any other vlaue other than asc or desc
@@ -147,6 +148,7 @@ exports.getProductCategories = (req, res) => {
 // controller method to get product by id
 
 exports.getProductById = (req,res) => {
+    console.log("Recieved request to get product by id");
     const {id} = req.params;
 
     // search the databse for the id given

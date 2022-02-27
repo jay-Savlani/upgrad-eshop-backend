@@ -15,6 +15,8 @@ exports.signup = async (req,res) => {
         
     const {firstName, lastName, email, password, contactNumber} = req.body;
 
+    console.log("req body: ", req.body);
+
     // check if the email already exists in the database
 
     // count the number of users 
@@ -67,7 +69,7 @@ exports.signup = async (req,res) => {
             .then(user => {
                 res.status(200).json({
                     user: user,
-                    message: "Signup successfull"
+                    message: "Signup successfull! Please login"
                 })
             })
             .catch(err => {
@@ -88,7 +90,21 @@ exports.signup = async (req,res) => {
 }
 
 exports.auth = (req,res) => {
+
+    console.log("request received to login")
+
     const {email, password} = req.body;
+
+    console.log("request body is: ", req.body);
+
+    if(!utils.validateEmail(email)) {
+        // send response 
+        res.status(400).json({
+            message: "Invalid email-id format!"
+        });
+        return;
+
+    }
 
     // checking if email exists in the databse
 
@@ -113,11 +129,14 @@ exports.auth = (req,res) => {
             // sending token to response header
 
             res.setHeader("x-auth-token", token);
+            res.setHeader("x-heelo" , "helloworld");
 
             res.status(200).json({
                 email: email,
                 name: user.userName,
-                isAuthenticated: true
+                isAuthenticated: true,
+                message: "Login Successfull!",
+                role: user.role
             });
         }
         // else password is invalid

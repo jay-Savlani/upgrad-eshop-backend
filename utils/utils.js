@@ -57,7 +57,13 @@ const buildProductSortCriteria = (direction, sortBy) => {
 const buildFindProductFilter = (name, category) => {
     let filter = {};
 
-    if(name) filter.name = name;
+    if(name) {
+        // const regex = new RegExp(`/${name}/g`);
+
+        const regex = new RegExp(`^${name}`, 'i');
+
+        filter.name = {$regex: regex};
+    }
     if(category) filter.category = category;
 
     return filter;
