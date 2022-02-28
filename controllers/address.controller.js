@@ -3,6 +3,7 @@ const Address = db.address;
 const User = db.user;
 
 exports.addAddress = async (req, res) => {
+    console.log("Request recieved to add address");
     const { name, contactNumber, street, landmark, city, state, zipcode, userEmail } = req.body;
 
     // validating zip code

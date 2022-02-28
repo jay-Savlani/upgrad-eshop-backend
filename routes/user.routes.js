@@ -9,6 +9,6 @@ module.exports = (app) => {
 
     router.post("/auth", userController.auth );
 
-    router.get("/user/addresses" , userController.getUserAddresses );
+    router.post("/user/addresses" , userController.getUserAddresses );
 
 }

@@ -7,11 +7,11 @@ const User = db.user;
 // controller method to create an order
 
 exports.createOrder = async (req, res) => {
+    console.log("recieved request to create order");
+    const { userEmail, productId, addressId, quantity } = req.body;
 
-    const { userId, productId, addressId, quantity } = req.body;
 
-
-    if (!userId || !productId || !addressId) {
+    if (!userEmail || !productId || !addressId) {
         res.status(400).json({
             message: "Please provide all details"
         });
@@ -26,7 +26,7 @@ exports.createOrder = async (req, res) => {
 
     // searching for user in the databse
 
-    User.findOne({user_id: userId})
+    User.findOne({email: userEmail})
     .then(user => {
         // check if user is not null
         if(user !== null) {
@@ -35,7 +35,7 @@ exports.createOrder = async (req, res) => {
         // else user is not found
         else {
             res.status(404).json({
-                message: `No user found for ID - ${userId}!`
+                message: `No user found for email - ${userEmail}!`
             });
             return;
         }

@@ -7,7 +7,7 @@ const utils = require("../utils/utils");
 
 exports.addProduct = async (req, res) => {
 
-
+    console.log("Recieved request to add product");
     const { name, category, price, description, manufacturer, availableItems, imageUrl } = req.body;
 
     // validating price
@@ -180,6 +180,7 @@ exports.getProductById = (req,res) => {
 // controller method to update product by id
 
 exports.updateProductByid = (req,res) => {
+    console.log("request recieved to update product");
     const {id} = req.params;
 
     const { name, category, price, description, manufacturer, availableItems, imageUrl } = req.body;

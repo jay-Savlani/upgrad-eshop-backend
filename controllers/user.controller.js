@@ -12,10 +12,9 @@ const jwt = require("jsonwebtoken");
 const utils = require("../utils/utils");
 
 exports.signup = async (req,res) => {
+    console.log("request recieved to sign up user");
         
     const {firstName, lastName, email, password, contactNumber} = req.body;
-
-    console.log("req body: ", req.body);
 
     // check if the email already exists in the database
 
@@ -95,7 +94,7 @@ exports.auth = (req,res) => {
 
     const {email, password} = req.body;
 
-    console.log("request body is: ", req.body);
+
 
     if(!utils.validateEmail(email)) {
         // send response 
@@ -157,6 +156,8 @@ exports.auth = (req,res) => {
 // fetch addresses based on user email 
 
 exports.getUserAddresses = (req, res) => {
+    console.log("request recieved to get user address");
+    // console.log("req body is", req.body);
     const {email} = req.body;
 
     // query user data based on email
@@ -169,7 +170,7 @@ exports.getUserAddresses = (req, res) => {
             // populate user send address
             user.populate('address')
             .then(userPopulated => {
-                console.log('populated user is: ', userPopulated);
+               
                 res.status(200).json({
                     addresses: userPopulated.address,
                     message: "Addresses fetched successfully"
