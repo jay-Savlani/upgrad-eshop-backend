@@ -32,13 +32,9 @@ exports.addProduct = async (req, res) => {
 
     // saving product
 
-    // counting number of documents in products collection
-
-    const count = await Product.find({}).count();
-
   
 
-    const newProduct = new Product({ ...req.body, product_id: count + 1 });
+    const newProduct = new Product({ ...req.body, category: category.toLowerCase()});
 
     newProduct.save()
         .then(product => {
@@ -68,6 +64,7 @@ exports.addProduct = async (req, res) => {
 exports.searchProduct = (req, res) => {
     console.log("request recieved to search product");
     const { category, direction, name, sortBy } = req.query;
+   
 
     // check if direction has any other vlaue other than asc or desc
     if (direction) {
@@ -153,7 +150,7 @@ exports.getProductById = (req,res) => {
 
     // search the databse for the id given
 
-    Product.findOne({product_id: id})
+    Product.findOne({_id: id})
     .then(product => {
         // checking if product is null or not
         if(product !== null) {
@@ -204,7 +201,7 @@ exports.updateProductByid = (req,res) => {
         return;
     }
 
-    Product.findOneAndUpdate({product_id: id}, updateObject, {new: true})
+    Product.findOneAndUpdate({_id: id}, updateObject, {new: true})
     .then(product => {
         // checking if product is null or not
         if(product !== null) {
@@ -237,7 +234,7 @@ exports.deleteProductById = (req,res) => {
 
     // delete product
 
-    Product.findOneAndDelete({product_id: id})
+    Product.findOneAndDelete({_id: id})
     .then(product => {
         // checking if product is null or not
         if(product !== null) {

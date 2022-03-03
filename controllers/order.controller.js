@@ -11,7 +11,7 @@ exports.createOrder = async (req, res) => {
     const { userEmail, productId, addressId, quantity } = req.body;
 
 
-    if (!userEmail || !productId || !addressId) {
+    if (!userEmail || !productId || !addressId || !userEmail) {
         res.status(400).json({
             message: "Please provide all details"
         });
@@ -20,7 +20,6 @@ exports.createOrder = async (req, res) => {
 
     // declaring object id counterparts of productId, userId, addressId
 
-    let productObjectId = "";
     let userObjectId = "";
     let addressObjectId = "";
 
@@ -78,15 +77,13 @@ exports.createOrder = async (req, res) => {
 
     // checking for product in the database and performing business logic
 
-    Product.findOne({ product_id: productId })
+    Product.findOne({ _id: productId })
         .then(product => {
             // checking if product is not null
             if (product !== null) {
                 // prodouct is found
 
                 // storing product _id
-
-                productObjectId = product._id;
 
                 // comparing product stock and quantity
 
@@ -102,7 +99,7 @@ exports.createOrder = async (req, res) => {
                     const newOrder = new Order({
                         user: userObjectId,
                         address: addressObjectId,
-                        product: productObjectId,
+                        product: productId,
                         quantity: quantity,
                         amount: amount,
                         order_id: count + 1

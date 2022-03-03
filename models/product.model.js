@@ -37,11 +37,6 @@ module.exports = (mongoose) => {
         updatedAt: {
             type: Date,
             
-        },
-        product_id: {
-            type: Number,
-            required: true,
-            unique: true
         }
     }, {timestamps: true});
 
